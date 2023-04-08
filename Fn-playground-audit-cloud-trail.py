@@ -3,8 +3,7 @@ import boto3
 import os
 
 def lambda_handler(event, context):
-    #accountid = event['account']
-    accountid = 453010743624
+    accountid = event['account']    
     
     s3_bucket = os.environ['s3_bucket']
     trail_name = os.environ['trail_name']
