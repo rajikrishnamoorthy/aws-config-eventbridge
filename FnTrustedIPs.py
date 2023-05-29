@@ -8,8 +8,7 @@ def lambda_handler(event, context):
         # Extract the input parameters
         input_parameters = json.loads(event["ruleParameters"])
         # Read the values of the location parameter
-        s3_url = input_parameters["location"]
-        #s3_url = 'https://myorganization-trusted-list.s3.ap-southeast-2.amazonaws.com/trusted-IP-list.txt'
+        s3_url = input_parameters["location"]        
         orderingtime = json.loads(event['invokingEvent'])['notificationCreationTime']
         
         guardduty = boto3.client('guardduty')
@@ -31,8 +30,7 @@ def lambda_handler(event, context):
             for ip_set_id in ip_set_ids:
                 try:
                     ip_set = guardduty.get_ip_set(DetectorId=detector, IpSetId=ip_set_id)
-                    print("testing#1")
-                    print(str(ip_set['Location']))
+                   
                     if (str(ip_set['Location']) == str(s3_url)):
                         evaluations.append(
                             {
